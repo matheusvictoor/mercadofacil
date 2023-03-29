@@ -41,6 +41,6 @@ public class ProdutoV1Controller {
         produtoModificadoJSONString = mockMvc.perform(
                 put("/produto/" + 10)
                 .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(produto)))
+                        .content(objectMapper.writeValueAsString(produto))
     }
 }
