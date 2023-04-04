@@ -1,46 +1,30 @@
 package com.ufcg.psoft.mercadofacil.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table (name = "Lotes")
 public class Lote {
+    @JsonProperty("id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
+    @JsonProperty("produto")
+    @ManyToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Produto produto;
+
+    @JsonProperty("numeroDeItens")
+    @Column(nullable = false)
     private int numeroDeItens;
 
-    public Lote(long id, Produto produto, int numeroDeItens) {
-        this.id = id;
-        this.produto = produto;
-        this.numeroDeItens = numeroDeItens;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public int getQntDeItens() {
-        return numeroDeItens;
-    }
-
-    public void setQntDeItens(int numeroDeItens) {
-        this.numeroDeItens = numeroDeItens;
-    }
-    @Override
-    public String toString() {
-        return "Lote-> " + "id:" + id + " produto: " + produto + " qntDeItens: " + numeroDeItens;
-    }
 }

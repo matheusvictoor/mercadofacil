@@ -1,18 +1,11 @@
 package com.ufcg.psoft.mercadofacil.repository;
 
 
+import com.ufcg.psoft.mercadofacil.model.Lote;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
-public interface LoteRepository<T, ID> {
-    T save(T lote);
+public interface LoteRepository extends JpaRepository<Lote, Long> {
 
-    T find(ID id);
-
-    List<T> findAll();
-
-    T update(T lote);
-
-    void delete(T lote);
-
-    void deleteAll();
 }

@@ -13,11 +13,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class VolatilLoteRepositoryTest {
+//@SpringBootTest
+class LoteVolatilRepositoryTest {
 
     @Autowired
-    VolatilLoteRepository driver;
+    LoteVolatilRepository driver;
     Lote lote;
     Lote resultado;
     Produto produto;
@@ -27,7 +27,7 @@ class VolatilLoteRepositoryTest {
         produto = Produto.builder()
                 .id(1L)
                 .nome("Produto Base")
-                .codigoBarra("123456789")
+                .codigoDeBarras("123456789")
                 .fabricante("Fabricante Base")
                 .preco(125.36)
                 .build();
@@ -59,7 +59,7 @@ class VolatilLoteRepositoryTest {
         Produto produtoExtra = Produto.builder()
                 .id(2L)
                 .nome("Produto Extra")
-                .codigoBarra("987654321")
+                .codigoDeBarras("987654321")
                 .fabricante("Fabricante Extra")
                 .preco(125.36)
                 .build();
@@ -89,7 +89,7 @@ class VolatilLoteRepositoryTest {
     }
 
     @Test
-    @DisplayName("Atualizar lote no repositório de dados")
+    @DisplayName("Atualizar lote no repositorio de dados")
     void update() {
         driver.save(lote);
         Lote novoLote = Lote.builder()
@@ -98,8 +98,8 @@ class VolatilLoteRepositoryTest {
                 .produto(produto)
                 .build();
         resultado = driver.update(novoLote);
-        assertEquals(resultado.getQntDeItens(), 50);
-        assertEquals(driver.find(1L).getQntDeItens(), 50);
+        assertEquals(resultado.getNumeroDeItens(), 50);
+        assertEquals(driver.find(1L).getNumeroDeItens(), 50);
     }
 
     @Test
@@ -108,7 +108,7 @@ class VolatilLoteRepositoryTest {
         Produto produtoExtra = Produto.builder()
                 .id(2L)
                 .nome("Produto Extra")
-                .codigoBarra("987654321")
+                .codigoDeBarras("987654321")
                 .fabricante("Fabricante Extra")
                 .preco(125.36)
                 .build();
@@ -141,7 +141,7 @@ class VolatilLoteRepositoryTest {
         Produto produtoExtra = Produto.builder()
                 .id(2L)
                 .nome("Produto Extra")
-                .codigoBarra("987654321")
+                .codigoDeBarras("987654321")
                 .fabricante("Fabricante Extra")
                 .preco(125.36)
                 .build();

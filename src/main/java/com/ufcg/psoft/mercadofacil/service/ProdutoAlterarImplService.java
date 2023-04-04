@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProdutoAlterarImplService implements ProdutoAlterarService {
     @Autowired
-    ProdutoRepository<Produto, Long> produtoRepository;
+    ProdutoRepository produtoRepository;
     @Override
     public Produto alterar(Produto produtoAlterado) {
         if(produtoAlterado.getPreco()<=0) {
             throw new RuntimeException("Preco invalido!");
         }
-        return produtoRepository.update(produtoAlterado);
+        return produtoRepository.save(produtoAlterado);
     }
 }
+

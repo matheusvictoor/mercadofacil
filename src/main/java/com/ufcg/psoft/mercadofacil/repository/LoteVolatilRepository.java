@@ -4,39 +4,42 @@ import java.util.*;
 import com.ufcg.psoft.mercadofacil.model.Lote;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class VolatilLoteRepository implements LoteRepository<Lote, Long> {
+
+public class LoteVolatilRepository{
     List<Lote> lotes = new ArrayList<>();
 
-    @Override
+
     public Lote save(Lote lote) {
         lotes.add(lote);
-        return lotes.stream().findFirst().get();
+        return lotes.get(lotes.size()-1);
     }
 
-    @Override
+
     public Lote find(Long id) {
-        return lotes.get(Integer.parseInt("" + id));
+        int index = id.intValue() - 1;
+        if(index >= 0 && index < lotes.size())
+            return lotes.get(index);
+       throw new IndexOutOfBoundsException("O elemento não existe na lista de lotes.");
     }
 
-    @Override
+
     public List<Lote> findAll() {
 
         return lotes;
     }
-    @Override
+
     public Lote update(Lote lote) {
         lotes.clear();
         lotes.add(lote);
         return lotes.stream().findFirst().orElse(null);
     }
 
-    @Override
+
     public void delete(Lote lote) {
         lotes.remove(lote);
     }
 
-    @Override
+
     public void deleteAll() {
         lotes.clear();
     }
