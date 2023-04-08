@@ -1,9 +1,21 @@
 package com.ufcg.psoft.mercadofacil.service;
 
 
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProdutoValidarCodigoDeBarrasService {
-    public int validarCodigoDeBarra(String codigoDeBarras) {
+    public int validarCodigoDeBarras(String codigoDeBarras) throws IllegalArgumentException {
+
+        if (codigoDeBarras.length() != 13)
+            throw new IllegalArgumentException("Código de barras com comprimento incorreto!");
+
+        if (codigoDeBarras == null)
+            throw new IllegalArgumentException("Código de barras não pode ser nulo!");
+
+        if (!codigoDeBarras.matches("\\d+"))
+            throw new IllegalArgumentException("Código de barras contém caractere inválido");
+
         int a = 0;
         int b = 0;
         int tam = codigoDeBarras.length();

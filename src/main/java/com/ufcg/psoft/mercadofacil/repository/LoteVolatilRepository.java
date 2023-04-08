@@ -3,8 +3,9 @@ package com.ufcg.psoft.mercadofacil.repository;
 import java.util.*;
 import com.ufcg.psoft.mercadofacil.model.Lote;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class LoteVolatilRepository{
     List<Lote> lotes = new ArrayList<>();
 

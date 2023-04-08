@@ -1,48 +1,72 @@
 package com.ufcg.psoft.mercadofacil.service;
 
-import com.ufcg.psoft.mercadofacil.model.Produto;
-import com.ufcg.psoft.mercadofacil.repository.ProdutoRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@DisplayName("Teste do serviço de validar cógido de barras")
+@DisplayName("Teste do servico de validar cogido de barras")
 public class ProdutoValidarCodigoDeBarrasServiceTest {
 
-    @Autowired
-    ProdutoRepository produtoRepository;
 
     @Autowired
     ProdutoValidarCodigoDeBarrasService driver;
-    Produto produto;
-    @BeforeEach
-    void setUp(){
-        produto = Produto.builder()
-                .codigoDeBarras("7891234567895")
-                .nome("Produto Sabonete em Barra")
-                .fabricante("Ind. Barras LTDA")
-                .preco(6.99)
-                .build();
-    }
 
-    @AfterEach
-    void tearDown() {
-        produtoRepository.deleteAll();
+    @Test
+    @DisplayName("Deve retornar o digito verificador correto para um codigo de barras valido")
+    void deveRetornarDigitoVerificadorCorreto() throws IllegalArgumentException{
+        // Arrange
+        String codigoDeBarras = "7891234567895";
+
+        // Act
+        int resultado = driver.validarCodigoDeBarras(codigoDeBarras);
+
+        // Assert
+        assertEquals(resultado, 5);
+
     }
 
     @Test
-    @DisplayName("O código de barras será verificado antes do produto ser salvo")
-    void verificaCodigoDeBarras() {
+    @DisplayName("Deve retornar -1 para um codigo de barras invalido")
+    void deveRetornarMenosUmParaCodigoDeBarrasInvalido() throws IllegalArgumentException {
         // Arrange
+        String codigoDeBarras = "7891234567890";
 
         // Act
-        int resultado = driver.validarCodigoDeBarra("7891234567895");
+        int resultado = driver.validarCodigoDeBarras(codigoDeBarras);
 
         // Assert
-        Assertions.assertEquals(resultado, 5);
+        assertEquals(resultado, -1);
+    }
+
+    @Test
+    @DisplayName("Deve lancar uma excecao para um codigo de barras com comprimento incorreto")
+    void deveLancarExcecaoParaCodigoDeBarrasComComprimentoIncorreto(){
+        // Arrange
+        String codigoDeBarras = "123456789";
+
+        // Act
+        Throwable excecao = assertThrows(IllegalArgumentException.class, () -> {
+            driver.validarCodigoDeBarras(codigoDeBarras);
+        });
+
+        // Assert
+        assertEquals("Código de barras com comprimento incorreto!", excecao.getMessage());
+
+    }
+
+    @Test
+    @DisplayName("Deve lancar uma excecao para um codigo de barras com caracteres invalidos")
+    void deveLancarUmExcecaoParaCodigoDeBarrasCOmCaracterInvalidos(){
+        // Arrange
+        String codigoDeBarras = "789123456789X";
+
+        // Act e Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            driver.validarCodigoDeBarras(codigoDeBarras);
+        });
 
     }
 }

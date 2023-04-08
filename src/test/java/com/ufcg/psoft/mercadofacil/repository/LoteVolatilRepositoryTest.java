@@ -53,7 +53,7 @@ class LoteVolatilRepositoryTest {
         assertEquals(resultado.getProduto(), produto);
     }
 
-    /*@Test
+    @Test
     @DisplayName("Adicionar o segundo Lote (ou posterior) no repositorio de dados")
     void salvarSegundoLoteOuPosterior() {
         Produto produtoExtra = Produto.builder()
@@ -156,5 +156,5 @@ class LoteVolatilRepositoryTest {
 
         driver.deleteAll();
         assertEquals(driver.findAll().size(), 0);
-    }*/
+    }
 }
