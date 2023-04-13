@@ -1,6 +1,10 @@
 package com.ufcg.psoft.mercadofacil.service;
 
+import com.ufcg.psoft.mercadofacil.repository.ProdutoRepository;
 import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,9 +14,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DisplayName("Teste do servico de validar cogido de barras")
 public class ProdutoValidarCodigoDeBarrasServiceTest {
 
+    @Mock
+    ProdutoRepository produtoRepository;
 
-    @Autowired
+    @InjectMocks
     ProdutoValidarCodigoDeBarrasService driver;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     @DisplayName("Deve retornar o digito verificador correto para um codigo de barras valido")
